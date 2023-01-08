@@ -16,7 +16,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <modules>
         <module>student-service</module>
-        <module>class-service</module>
+        <module>grade-service</module>
     </modules>
 
     <properties>

@@ -1,4 +1,4 @@
-package com.bbk.classservice.model;
+package com.bbk.gradeservice.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,12 +8,12 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "t_class")
+@Table(name = "t_grade")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Class {
+public class Grade {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,5 +21,5 @@ public class Class {
 
     private Integer studentId;
 
-    private Integer classId;
+    private Integer studentGrade;
 }

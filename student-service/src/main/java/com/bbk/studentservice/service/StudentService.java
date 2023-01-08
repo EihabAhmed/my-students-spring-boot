@@ -19,7 +19,7 @@ import java.util.List;
 public class StudentService {
 
     private final StudentRepository studentRepository;
-    private final WebClient webClient;
+    private final WebClient.Builder webClientBuilder;
 
     public Student addStudent(StudentRequest studentRequest) {
 
@@ -38,8 +38,8 @@ public class StudentService {
                 .map(Student::getId)
                 .toList();
 
-        GradeResponse[] gradeResponseArray = webClient.get()
-                .uri("http://localhost:8082/api/grade",
+        GradeResponse[] gradeResponseArray = webClientBuilder.build().get()
+                .uri("http://grade-service/api/grade",
                         uriBuilder -> uriBuilder.queryParam("studentIds", studentIds).build())
                 .retrieve()
                 .bodyToMono(GradeResponse[].class)

@@ -27,4 +27,8 @@ public class GradeService {
                                 .build()
                 ).toList();
     }
+
+    public Grade addStudentGrade(Grade grade) {
+        return gradeRepository.save(grade);
+    }
 }

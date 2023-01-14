@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class GradeResponse {
 
-    private int studentId;
+    private Long studentId;
     private int studentGrade;
 }

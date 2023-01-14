@@ -5,11 +5,14 @@ import com.bbk.studentservice.dto.StudentRequest;
 import com.bbk.studentservice.model.Student;
 import com.bbk.studentservice.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ResponseStatusException;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -26,8 +29,21 @@ public class StudentService {
         Student student = new Student();
         student.setName(studentRequest.getName());
         student.setAge(studentRequest.getAge());
+        student = studentRepository.save(student);
 
-        return studentRepository.save(student);
+        GradeResponse grade = webClientBuilder.build().post()
+                .uri("http://grade-service/api/grade")
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(Mono.just(GradeResponse.builder()
+                                .studentId(student.getId())
+                                .studentGrade(studentRequest.getGrade())
+                                .build()),
+                        GradeResponse.class)
+                .retrieve()
+                .bodyToMono(GradeResponse.class)
+                .block();
+
+        return student;
     }
 
     @Transactional(readOnly = true)
